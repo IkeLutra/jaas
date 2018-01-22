@@ -7,48 +7,30 @@
   revision = "036d9d86531a3aff6be42ea59541cf44310d94ab"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/alexellis/jaas"
+  packages = ["test","version"]
+  revision = "4f17f48871701f7f6dc9038c18c407aacb4c105e"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/docker/cli"
+  packages = ["opts"]
+  revision = "44a1168ae5fbfecdb18e7f411abd595ccadb7017"
+
+[[projects]]
   name = "github.com/docker/distribution"
-  packages = [
-    "digestset",
-    "reference"
-  ]
+  packages = ["digestset","reference"]
   revision = "edc3ab29cdff8694dd6feb85cfeb4b5f1b38ed9c"
 
 [[projects]]
   name = "github.com/docker/docker"
-  packages = [
-    "api",
-    "api/types",
-    "api/types/blkiodev",
-    "api/types/container",
-    "api/types/events",
-    "api/types/filters",
-    "api/types/image",
-    "api/types/mount",
-    "api/types/network",
-    "api/types/registry",
-    "api/types/strslice",
-    "api/types/swarm",
-    "api/types/swarm/runtime",
-    "api/types/time",
-    "api/types/versions",
-    "api/types/volume",
-    "client",
-    "pkg/ioutils",
-    "pkg/longpath",
-    "pkg/mount",
-    "pkg/system",
-    "pkg/tlsconfig"
-  ]
+  packages = ["api","api/types","api/types/blkiodev","api/types/container","api/types/events","api/types/filters","api/types/image","api/types/mount","api/types/network","api/types/registry","api/types/strslice","api/types/swarm","api/types/swarm/runtime","api/types/time","api/types/versions","api/types/volume","client","pkg/ioutils","pkg/longpath","pkg/mount","pkg/system","pkg/tlsconfig"]
   revision = "7e59fbe50eaa5fd952f7a05aa827e2dc738c3794"
 
 [[projects]]
   name = "github.com/docker/go-connections"
-  packages = [
-    "nat",
-    "sockets",
-    "tlsconfig"
-  ]
+  packages = ["nat","sockets","tlsconfig"]
   revision = "3ede32e2033de7505e6500d6c868c2b9ed9f169d"
   version = "v0.3.0"
 
@@ -89,10 +71,7 @@
 
 [[projects]]
   name = "github.com/opencontainers/image-spec"
-  packages = [
-    "specs-go",
-    "specs-go/v1"
-  ]
+  packages = ["specs-go","specs-go/v1"]
   revision = "710038243d857231f17df1c3f4c10850154bd1f7"
 
 [[projects]]
@@ -124,24 +103,17 @@
 
 [[projects]]
   name = "golang.org/x/net"
-  packages = [
-    "context",
-    "context/ctxhttp",
-    "proxy"
-  ]
+  packages = ["context","context/ctxhttp","proxy"]
   revision = "f5079bd7f6f74e23c4d65efa0f4ce14cbd6a3c0f"
 
 [[projects]]
   name = "golang.org/x/sys"
-  packages = [
-    "unix",
-    "windows"
-  ]
+  packages = ["unix","windows"]
   revision = "d8f5ea21b9295e315e612b4bcf4bedea93454d4d"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "af66a29d0944787b9ad5282b883067f3142b0eed895725b60e7fcb1d30fe1f29"
+  inputs-digest = "52c6c888a0423389d473b2cd366e8e3bbd717b6c493d6f1d8c6cf3498f03320e"
   solver-name = "gps-cdcl"
   solver-version = 1

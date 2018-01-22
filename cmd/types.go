@@ -9,6 +9,7 @@ type TaskRequest struct {
 	Networks      []string
 	Constraints   []string
 	EnvVars       []string
+	EnvFile       []string
 	ShowLogs      bool
 	Timeout       string
 	RemoveService bool

@@ -11,11 +11,13 @@ import (
 	"os"
 	"strconv"
 	"time"
+	"path/filepath"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/swarm"
 	"github.com/docker/docker/client"
+	"github.com/docker/cli/opts"
 
 	"github.com/spf13/cobra"
 )
@@ -32,6 +34,7 @@ func init() {
 	runCmd.PersistentFlags().StringArrayVarP(&taskRequest.Networks, "network", "n", []string{}, "provide a network to bind to")
 	runCmd.PersistentFlags().StringArrayVarP(&taskRequest.Constraints, "constraint", "c", []string{}, "constraint for task")
 	runCmd.PersistentFlags().StringArrayVarP(&taskRequest.EnvVars, "env", "e", []string{}, "environmental variable for task")
+	runCmd.PersistentFlags().StringArrayVar(&taskRequest.EnvFile, "env-file", []string{}, "environmental variable file for task")
 	runCmd.PersistentFlags().BoolVarP(&taskRequest.ShowLogs, "show-logs", "l", true, "show logs")
 	runCmd.PersistentFlags().StringVarP(&taskRequest.Timeout, "timeout", "t", "60s", "timeout as a Golang duration")
 
@@ -69,6 +72,7 @@ func runTask(taskRequest TaskRequest) error {
 		fmt.Printf("Connected to.. OK %s\n", taskRequest.Networks)
 		fmt.Printf("Constraints: %s\n", taskRequest.Constraints)
 		fmt.Printf("envVars: %s\n", taskRequest.EnvVars)
+		fmt.Printf("envFile: %s\n", taskRequest.EnvFile)
 	}
 
 	timeoutVal, parseErr := time.ParseDuration(taskRequest.Timeout)
@@ -106,7 +110,25 @@ func runTask(taskRequest TaskRequest) error {
 		}
 	}
 
-	spec := makeSpec(taskRequest.Image, taskRequest.EnvVars)
+	var envVars []string
+
+	for _, file := range taskRequest.EnvFile {
+			if (!filepath.IsAbs(file)) {
+				dir, err := os.Getwd()
+				if err != nil {
+					return fmt.Errorf("Can't get current working directory. Error: %f", err)
+				}
+				file = filepath.Join(dir, file)
+			}
+			fileVars, err := opts.ParseEnvFile(file)
+			if err != nil {
+				return fmt.Errorf("Error parsing environment file. Error: %s", err)
+			}
+			envVars = append(envVars, fileVars...)
+	}
+	envVars = append(envVars, taskRequest.EnvVars...)
+
+	spec := makeSpec(taskRequest.Image, envVars)
 	if len(taskRequest.Networks) > 0 {
 		nets := []swarm.NetworkAttachmentConfig{
 			swarm.NetworkAttachmentConfig{Target: taskRequest.Networks[0]},
